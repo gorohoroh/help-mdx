@@ -1,0 +1,608 @@
+<include src="lib_libraries.xml" include-id="edition" product="ij,py">
+        <var name="edition" value="Professional" product="py"/>
+        <var name="edition" value="Ultimate" product="ij"/>
+</include>
+
+<p>In this section:</p>
+<tag-list of="chapter" />
+
+        <p>
+            %product% integrates with the <a href="https://docs.npmjs.com/">npm</a> and <a href="https://yarnpkg.com/en/">Yarn</a> package managers
+            so you can install, locate, upgrade, and remove packages of reusable code from inside the IDE.
+            The <a nullable="true" href="Node_js.xml">Node.js and NPM page</a> provides a dedicated UI for managing packages.
+            Of course, you can also do that from the command line in the built-in <a href="Working_with_System_Console.xml">Terminal</a>.
+        </p>
+    <p>
+        %product% also lets you <a href="https://docs.npmjs.com/misc/scripts">run and debug npm scripts</a>.
+        %product% parses <code>package.json</code> files, recognizing definitions of scripts,
+        shows scripts in a tree view, and lets you navigate between a script in the tree and its definition in the <code>package.json</code> file.
+    </p>
+    <p>
+        %product% detects projects with <a href="https://yarnpkg.com/lang/en/docs/workspaces/">Yarn workspaces</a>
+        and indexes all the dependencies that are listed in the <code>package.json</code> files of the workspaces but are located in the root <code>node_modules</code> folder.
+        <img src="ws_yarn_workspaces.png" alt="%product% indexes all the dependencies listed in different package.json file but stored in the root node_modules folder" width="600" height="342" type="separated" />
+    </p>
+
+<chapter id="ws_npm_yarn_configure_package_manager" title="Choosing a project package manager" caps="aswritten">
+
+<warning rel="ws_npm_yarn_choose_installation">
+    <p>
+        %product% uses the <code>npm</code> and <code>yarn</code> aliases that are assigned to the current system paths
+        to these managers.
+        If you choose another Node.js version, %product% also changes the <code>npm</code> aliased path to point to the
+        npm version
+        bundled with the selected Node.js version.
+    </p>
+</warning>
+
+
+<procedure id="ws_npm_yarn_choose_pacage_manager" title="To choose a package manager for the current project"
+           style="steps" caps="aswritten">
+    <step>
+        <include src="lib.xml" include-id="open_settings"/>,
+        click <control>Node.js and NPM</control> under <control>Languages and Frameworks</control>.
+        The
+        <a href="Node_js.xml"/>
+        page opens.
+    </step>
+    <step id="ws_npm_yarn_choose_installation">
+        From the <control>Package manager</control> list, choose <code>npm</code> or <code>yarn</code> to use the system
+        default installation.
+        To use a custom installation of a package manager, click <control>Select</control>,
+        and then choose the relevant path to the package manager in the dialog that opens.
+        <img src="ws_package_manager_configuration.png" alt="ws_package_manager_configuration.png" width="600"
+             height="206" type="separated"/>
+        %product% automatically uses the chosen package manager when you select the <code>Project</code> alias
+        from the <control>Package manager</control> list in the
+        <a href="Run_Debug_Configuration_NPM.xml"/>
+        dialog.
+        %product% also uses the path to the chosen package manager every time you invoke the <control>Run 'npm
+        install'</control>/
+        <control>Run 'yarn install'</control>
+        command or run an npm/Yarn script,
+        see <a href="Installing_and_Removing_External_Software_Using_Node_Package_Manager.xml"
+               anchor="ws_npm_running_npm_scripts">Running and debugging scripts
+    </a> for details.
+    </step>
+</procedure>
+
+<procedure id="ws_npm_yarn_set_yarn_default" title="To set Yarn as the default %product% package manager" style="steps" caps="aswritten">
+    <step>
+        In the <control>Default Settings</control> dialog (<menupath>File | Default Settings...</menupath>),
+        click <control>Node.js and NPM</control> under <control>Languages and Frameworks</control>.
+    </step>
+    <step>
+        On the <control>Node.js and NPM</control> page that opens, choose <code>yarn</code> from the <control>Package manager</control> list.
+        After that, %product% will suggest Yarn as default every time you create a new project.
+    </step>
+</procedure>
+
+</chapter>
+
+        <chapter id="ws_npm_install_cmd" title="Installing packages using the built-in Terminal" caps="aswritten">
+            <p>
+                As you may know, npm can install packages both <a href="https://docs.npmjs.com/getting-started/installing-npm-packages-globally">globally</a>
+                or as <emphasis>project dependencies</emphasis> or <emphasis>development dependencies</emphasis>,
+                learn more from the <a href="https://docs.npmjs.com/getting-started/using-a-package.json#the---save-and---save-dev-install-flags">npm Official website</a>.
+                With Yarn, you can also install packages <a href="https://yarnpkg.com/en/docs/cli/global">globally</a>
+                or as project dependencies, see <a href="https://yarnpkg.com/en/docs/cli/install">Yarn Official website</a> for details.
+            </p>
+            <procedure id="npm_install_cmd" title="To install a package" style="plain">
+                <step>
+                <include src="lib_npm_bower.xml" include-id="launchEmbeddedTerminal">
+                    <var name="open" value="Open" />
+                </include>
+                and type one of the following commands at the command prompt:
+                <list type="bullet">
+                    <li>
+                        <code>npm install&nbsp;--global &lt;package_name&gt;</code> or <code>yarn global add &lt;package_name&gt;</code>
+                        for global installation.
+                    </li>
+                    <li>
+                        <code>npm install&nbsp;--save &lt;package_name&gt;</code>, <code>npm install&nbsp;--save-dev &lt;package_name&gt;</code>,
+                        or  <code>yarn add &lt;package_name&gt; --dev</code>
+                        to install the package as a project dependency or a development dependency.
+                    </li>
+                </list>
+                </step>
+            </procedure>
+
+            <procedure id="ws_npm_install_no_package" title="To install all dependencies from a package.json file" caps="aswritten" style="plain">
+                <step>
+                    <include src="lib_npm_bower.xml" include-id="launchEmbeddedTerminal">
+                        <var name="open" value="Open" />
+                    </include>
+                    and type <code>npm install</code>  or <code>yarn install</code> at the command prompt.
+                    As a result you get all the dependencies listed in the <code>package.json</code> from the current folder.
+                    Learn more from <a href="Installing_and_Removing_External_Software_Using_Node_Package_Manager.xml" anchor="ws_npm_yarn_edit_package_json">Editing package.json</a>.
+                </step>
+            </procedure>
+
+        </chapter>
+
+    <chapter id="ws_npm_install_ui" title="Installing and upgrading packages on the Node.js and NPM page" caps="aswritten">
+        <p>
+            %product% shows all the currently installed packages on the <a nullable="true" href="Node_js.xml">Node.js and NPM page</a>.
+            To open the page, in the <control>Settings/Preferences</control> dialog (<shortcut key="ShowSettings" />),
+            click <control>Node.js and NPM</control> under <control>Languages and Frameworks</control>.
+            Globally installed packages are listed on top.
+            For each package, %product% shows its currently installed version and the latest available version.
+        </p>
+        <procedure title="To install a package" caps="aswritten" style="steps">
+                <step>
+                    Click <img src="add.png" /> and in the <control>Available Packages</control> dialog that opens, select the required package.
+                </step>
+                <step>
+                    By default, the latest package version is installed. To install another one,
+                    select the <control>Specify version</control> checkbox and choose the required version from the list.
+                </step>
+                <step id="ws_npm_yarn_UI_install_package">
+                    The default installation is <emphasis>local</emphasis>.
+                    To use another installation type,
+                    select the <control>Options</control> checkbox and type
+                    <code>-g</code> for <emphasis>global installation</emphasis> or
+                    <code>-save</code>/<code>--save-dev</code> to install the package as a dependency/development dependency.
+                    Learn more from the
+                    <a href="https://docs.npmjs.com/getting-started/using-a-package.json#the---save-and---save-dev-install-flags">npm Official website</a>
+                    and <a href="https://yarnpkg.com/en/docs/usage">Yarn Official website</a>.
+                </step>
+        </procedure>
+
+    </chapter>
+
+
+    <chapter id="ws_npm_running_npm_scripts" title="Running and debugging scripts" caps="aswritten">
+        <p>
+            You can launch npm or Yarn scripts from a <code>package.json</code> file in the editor,
+            from a tree of scripts in the dedicated <control>npm</control> tool window,
+            according to a dedicated run configuration,
+            or automatically, as a <emphasis>start-up</emphasis> or a <emphasis>before-launch</emphasis> task.
+        </p>
+        <p>
+            The results of script execution are displayed in the <a href="Run_Tool_Window.xml" />.
+            <include src="lib_js_task_runners.xml" include-id="consolePane">
+                <var name="toolName" value="npm or Yarn script" />
+                <var name="task" value="script" />
+            </include>
+        </p>
+        <p>
+            During a script debugging session, %product% opens the <a href="Debug_Tool_Window.xml" /> where you can
+            <include src="lib_js_debugger.xml" include-id="js_debugging_session_steps" />
+        </p>
+
+        <procedure title="To enable debugging a script" caps="aswritten" style="plain">
+            <step>
+            Add the <code>$NODE_DEBUG_OPTION</code> to its definition in the <code>package.json</code> file, for example:
+            <code style="block" lang="Shell">
+{
+"name": "application-name",
+"version": "0.0.1",
+"scripts": {
+    "main": "node $NODE_DEBUG_OPTION ./app-compiled.js"
+    }
+}
+            </code>
+            </step>
+        </procedure>
+
+<chapter id="ws_npm_running_scripts_from_editor" title="Running and debugging scripts from package.json" caps="aswritten">
+    <p>
+        %product% lets you quickly launch single scripts from <code>package.json</code> files.
+        To run or debug several scripts, use a run configuration or the <control>npm</control> tool window.
+    </p>
+    <note rel="ws_npm_running_scripts_from_editor_procedure">
+        <p>
+            You can also run a script by pressing <shortcut key="RunClass" />.
+        </p>
+    </note>
+        <procedure style="plain">
+            <step id="ws_npm_running_scripts_from_editor_procedure">
+                Open the <code>package.json</code> file in the editor, click <img src="run.png" /> in the gutter next to the script,
+                and choose <control>Run &lt;script_name&gt;</control> or <control>Debug &lt;script_name&gt;</control> on the context menu.
+                <img src="ws_run_npm_task.png" alt="ws_run_npm_task.png" width="600" height="263" type="separated" />
+            </step>
+        </procedure>
+</chapter>
+
+
+
+<chapter id="ws_npm_run_debug_scripts_from_npm_tool_window" title="Running and debugging scripts from the npm tool window" caps="aswritten">
+    <p>
+        <include src="lib_js_task_runners.xml" include-id="ws_npm_yarn_open_npm_tw" />
+        <include src="lib_js_task_runners.xml" include-id="ws_npm_yarn_several_package_json_files" />
+    </p>
+    <procedure title="To open the npm tool window if it is not opened yet" caps="aswritten" style="plain">
+        <step>
+        <include src="lib_js_task_runners.xml" include-id="openGruntToolWindow">
+            <var name="fileName" value="package.json"/>
+            <var name="commandName" value="Show npm Scripts"/>
+        </include>
+        The <control>npm</control> tool window opens showing the scripts  tree
+        built according to the selected or opened <code>package.json</code> file.
+        </step>
+    </procedure>
+
+    <procedure title="To build a tree of scripts in an already opened npm tool window" caps="aswritten" style="plain">
+        <step>
+        <include src="lib_js_task_runners.xml" include-id="newTab">
+            <var name="toolWindowName" value="npm"/>
+            <var name="fileName" value="package.json"/>
+            <var name="tasks" value="scripts" />
+            <var name="click" value="click" />
+        </include>
+        </step>
+    </procedure>
+    <procedure title="To re-build a tree" caps="aswritten" style="plain">
+        <step>
+            <include src="lib_js_task_runners.xml" include-id="rebuildTasksTree">
+                <var name="switch" value="Switch" />
+            </include>
+        </step>
+    </procedure>
+
+    <procedure title="To sort the scripts in a tree by their names" caps="aswritten" style="plain">
+        <step>
+        <include src="lib_js_task_runners.xml" include-id="gulp_grunt_order_reconfigure">
+            <var name="grunt_gulp_config" value="package.json" />
+            <var name="task" value="script" />
+        </include>
+        </step>
+    </procedure>
+
+
+</chapter>
+
+
+        <chapter id="ws_npm_run_config" title="Running scripts by a run configuration" caps="aswritten">
+            <tip rel="ws_npm_yarn_run_config_cli_script_package_json">
+                <p>
+                    Learn more about the Command Line Interfaces for the package managers from the <a href="https://docs.npmjs.com/cli/access">npm Official Website</a>
+                    and <a href="https://yarnpkg.com/en/docs/usage">Yarn Official website</a>.
+                </p>
+            </tip>
+            <p>
+                When you run or debug scripts from the editor or from the <control>npm</control> tool window, %product% automatically creates
+                <emphasis>temporary</emphasis> run configurations. Besides using them, you can create and launch your own npm run configurations.
+            </p>
+            <procedure id="createGruntRunConfig" style="steps">
+                <step>
+                    <include src="lib.xml" include-id="start_creating_run_config_short_1"/>
+                </step>
+                <step>
+                    <include src="lib.xml" include-id="start_creating_run_config_short_2">
+                        <var name="run_config_type" value="npm"/>
+                        <var name="click" value="Click" />
+                    </include>
+                        The <a nullable="true" href="Run_Debug_Configuration_NPM.xml">Run/Debug Configuration: npm dialog</a> opens.
+                </step>
+                <step id="ws_npm_yarn_run_config_cli_script_package_json">
+                    Specify the CLI command to execute,
+                    the scripts to run (use blank spaces as separators), and
+                    the location of the <code>package.json</code> file where these scripts are defined.
+                    Optionally, type the <a href="https://docs.npmjs.com/cli/run-script#description">command line arguments</a> for executing the scripts.
+                </step>
+                <step>
+                    <include src="lib_ws_node.xml" include-id="ws_node_choose_node_interpreter">
+                        <var name="Specify" value="Specify" />
+                    </include>
+                    <p>
+                    <include src="lib_ws_node.xml" include-id="ws_node_parameters_and_environment_variables" />
+                    </p>
+                </step>
+                <step>
+                    <include src="lib_js_task_runners.xml" include-id="ws_npm_yarn_choose_pm_in_run_config">
+                        <var name="Specify" value="Specify" />
+                    </include>
+                </step>
+                <step>
+                    Select the newly created run configuration from the list on the main tool bar
+                    and then click <img src="run.png" alt="run.png"/>.
+                    The output is displayed in the <a href="Run_Tool_Window.xml">Run tool window</a>.
+                </step>
+            </procedure>
+        </chapter>
+
+    <chapter id="ws_npm_run_automatically" title="Running scripts automatically on start-up" caps="aswritten">
+        <p>
+            <include src="lib_js_task_runners.xml" include-id="gulp_grunt_startup_tasks_intro">
+                <var name="tasks" value="scripts" />
+            </include>
+        </p>
+        <procedure style="steps">
+            <step>
+                <include src="lib.xml" include-id="open_settings"/>,
+                click <control>Startup Tasks</control> under <control>Tools</control>.
+            </step>
+            <include src="lib_js_task_runners.xml" include-id="gulp_grunt_startup_tasks_add_config">
+                <var name="tool" value="npm" />
+                <var name="run_config" value="Run_Debug_Configuration_NPM.xml" />
+            </include>
+        </procedure>
+    </chapter>
+
+    </chapter>
+
+<chapter title="Dependencies tab" caps="aswritten" id="DependenciesTab">
+  <p>Use this tab to specify <a href="http://tools.android.com/tech-docs/new-build-system/user-guide#TOC-Dependencies-Android-Libraries-and-Multi-project-setup">
+    dependencies</a> for your application.</p>
+  <table>
+    <tr>
+      <td width="20%">Item</td>
+      <td>Description</td>
+    </tr>
+    <tr>
+    <td>Scope</td>
+    <td>Use this setting to control the classpath
+      separately for your <a product="!ij" href="Content_Root.xml" anchor="source_root">sources</a>
+      <for product="ij">sources</for> and
+      <a product="!ij" href="Content_Root.xml" anchor="test_folder">test sources</a><for product="ij">test sources</for>,
+      and for the build and the run phases.
+      (The classpath may be different when 1) your sources are compiled 2) your test sources are compiled
+      3) your compiled sources are run 4) your tests are run.
+      The Scope option defines classpaths in which you include the dependency.)
+      <p>You can select from the following options:</p>
+      <list>
+        <li><control>Compile</control> - use this option to include the dependency in the classpath
+          for your sources at the compilation and run phases.</li>
+        <li><control>Provided</control> - use this option include a dependency that is provided by the runtime environment.</li>
+        <li><control>APK</control> - use this option to include the dependency in .apk 
+          file that will be generated as a result of Android module compilation.
+        </li>
+        <li><control>Test compile</control> - use this option to include the dependency in the classpath
+          for your test sources at the test compilation phase.</li>
+        <li><control>Debug compile</control> - use this option to include the dependency in the classpath
+          for the debug build type at the compilation phase.</li>
+        <li><control>Release compile</control> - use this option to include the dependency in the classpath
+          for the release build type at the compilation phase.</li>
+      </list>
+    </td>
+    </tr>
+    <tr>
+      <td><img src="add.png"/> or <shortcut key="NewElement"/></td>
+      <td>
+        Use this icon or shortcut to add a <a href="Library.xml">library</a> or a module to the list of
+        the module dependencies. Select one of the following options:>
+        <list>
+          <li>
+            <control>Jars or directories.</control>
+            Select this option to create a new module library and add it to the list of dependencies.
+            In the <a href="Select_Path_Dialog.xml">dialog that opens</a>,
+            select the files and folders to be included in the library.
+            These may be
+            individual <code>.class</code> and <code>.java</code> files,
+            directories and archives (<code>.jar</code> and <code>.zip</code>) containing such files as well as
+            directories with Java native libraries (<code>.dll</code>, <code>.so</code> or <code>.jnilib</code>).</li>
+          <li>
+            <control>Library.</control>
+            Select this option to add one or more of the existing
+            project, global or application server libraries to the list of dependencies.
+            In the dialog that opens, select the library or libraries and click <control>Add Selected</control>.</li>
+          <li>
+            <control>Module Dependency.</control>
+            Select this option to specify the modules that the current module should depend on.
+          </li></list>
+        </td>
+    </tr>
+    <tr>
+      <td><img src="delete.png"/> or <shortcut key="SafeDelete"/></td>
+      <td>Use this icon or shortcut to remove the selected item or items from the list of dependencies.</td>
+    </tr>
+    <tr>
+      <td><img src="arrowUp.png"/> or <shortcut key="MethodUp"/> and <img src="arrowDown.png"/> or <shortcut key="MethodDown"/></td>
+      <td>Use these icons and shortcuts to move the selected item up or down in the list.
+        See <a href="Creating_and_Managing_Modules.xml" anchor="working-with-module-dependencies"/>.</td>
+    </tr>
+  </table>
+</chapter>
+
+<for filter="wrapping,cpp">
+    <p product="!cl">
+        <emphasis id="wrap">Wrapping options</emphasis><br/>
+         <for filter="!swift">
+             The wrapping style applies to the various code constructs, specified in the left-hand pane (for example, method call arguments, or assignment statements).
+         </for>
+        <table header-style="none">
+            <tr>
+                <td>Do not wrap</td>
+                <td>
+                    When this option is selected, no special wrapping style is applied,
+                    the nested alignment and braces settings are ignored.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Wrap if long
+                </td>
+                <td>
+                    Select this option to have lines going beyond the right margin wrapped with proper
+                    indentation.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Wrap always
+                </td>
+                <td>
+                    Select this option to have all elements in lists wrapped
+                    so that there is one element per line with proper indentation.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Chop down if long
+                </td>
+                <td>
+                    Select this option to have elements in lists that go beyond the right margin
+                    wrapped so that there is one element per line with proper indentation.
+                </td>
+            </tr>
+            <tr filter="swift">
+                <td>Wrap after modifier list:</td>
+                <td>
+                   Wrap the modifier list on next line, indent as the first modifier character.
+                </td>
+            </tr>
+            <tr filter="json">
+                <td>Ensure right margin is not exceeded</td>
+                <td>If this checkbox is selected, the formatter will do its best to avoid having document lines exceeding the right margin.
+                    This option takes precedence over the <keyword>Do not wrap</keyword> wrapping style.</td>
+            </tr>
+        </table>
+    </p><!--WS-Wrapping options-->
+
+    <p id="align"><!--WS-Alignment options-->
+      <emphasis>Alignment options</emphasis>
+        <table filter="nojson" header-style="none">
+            <tr>
+                <td id="alignMultiline">Align when multiline</td>
+                <td>If this checkbox is selected, a code construct starts at the same column on each next line.
+                    Otherwise, the position of a code construct is determined by the current indentation level.
+                </td>
+            </tr>
+            <tr filter="swift,cmake,срр">
+                <td>Align parenthesised when multiline</td>
+                <td>If this checkbox is selected, a parenthesised code construct starts at the column of the
+                    opening parenthesis each next line. Otherwise, the position of a code construct is
+                    determined by the current indentation level.</td>
+            </tr>
+            <tr product="ac">
+                <td>Align in columns</td>
+                <td>
+                    If this checkbox is selected, the variables names, types and initializers are aligned in columns,
+                    each variable on next line, as in example:
+                    <p>
+                        <control>Before</control>
+                        <code style="block" lang="C++">
+                            var myName: String
+                            var myTitle:  String
+                            var myOrderNumber: Int
+                        </code>
+                    </p>
+                    <p>
+                        <control>After</control>
+                    </p>
+                    <code style="block" lang="C++">
+                        var myName:        String
+                        var myTitle:       String
+                        var myOrderNumber: Int
+                    </code>
+                </td>
+            </tr>
+            <tr filter="!swift,kotlin">
+                <td><code style="inline">&lt;character(s)&gt;</code> on next line</td>
+                <td>Select this checkbox to have the specified character or characters moved to the next line
+                    when the lines are wrapped.</td>
+            </tr>
+            <tr filter="!kotlin">
+                <td id="placeOnNewLine">'else' on new line</td>
+                <td>Use this checkbox to have the corresponding statements or characters moved to the next line.</td>
+            </tr>
+            <tr filter="!swift,kotlin">
+                <td>New line after <code style="inline">&lt;character&gt;</code>
+                </td>
+                <td>Select this checkbox to have the code after the specified character moved to a new line.</td>
+            </tr>
+            <tr filter="!kotlin">
+                <td>Special else if treatment</td>
+                <td>If this checkbox is selected, <code style="inline">else if</code> statements are located in the same line.
+                    <p>
+                        Otherwise, <code style="inline">else if</code> statements are moved to the next line to
+                        the corresponding indent level.</p>
+                </td>
+            </tr>
+            <tr filter="!kotlin">
+                <td>Indent case branches</td>
+                <td>
+                    If this checkbox is selected, the <code style="inline">case</code> statement is located at the corresponding indent level.
+                    Otherwise, <code style="inline">case</code> statement is placed at the same indent level with <code style="inline">switch</code>.
+                </td>
+            </tr>
+        </table>
+    </p>
+    <for filter="nojson">
+        <p filter="!kotlin">
+            <emphasis id="bracesPlacement">Braces placement options</emphasis>
+            <table header-style="none">
+                <tr>
+                    <td>
+                        Braces placement style
+                    </td>
+                    <td id="class">
+                        Use  this drop-down list to specify the position of the opening brace in
+                        <keyword>class declarations</keyword>,
+                        <keyword product="!cl">method declarations,</keyword>
+                        <keyword product="cl">function declarations</keyword>
+                        and other types of declarations. The available options are:
+                        <list>
+                            <include src="CodeStyleChunks.xml" include-id="bracesPlacementOptions" />
+                        </list>
+                    </td>
+                </tr>
+                <tr filter="!swift">
+                    <td id="forceBraces">
+                        Force braces</td>
+                    <td>From  this  drop-down list, choose the braces introduction method for <code style="inline">if</code>, <code style="inline">for</code>,
+                        <code style="inline">while</code>, and <code style="inline">do () while</code> statements. The available options are:
+                        <list type="bullet">
+                            <li>
+                                <control>Do not force</control> - select this option to suppress introducing braces automatically.</li>
+                            <li>
+                                <control>When multiline</control> - select this option to have braces introduced automatically,
+                                if a statement occupies more than one line. Note that %product% analyzes the number of lines in
+                                the entire statement but not only its condition.
+                                <p product="ps,ac,cl">For example, if the code is
+                                    <code style="block" lang="PHP" product="!ac,cl">
+                                        &lt;?php
+                                        if (true)
+                                        return false;
+                                    </code>
+                                    <code style="block" product="ac,cl" lang="C++">
+                                        int foo (int Days) {
+                                        if ((Days % 10) == 3)
+                                        return 1;
+                                        else
+                                        return 0;
+                                        }
+                                    </code>
+
+                                    %product% will insert braces automatically:
+                                    <code style="block" lang="PHP" product="!ac,cl">
+                                        &lt;?php
+                                        if (true)
+                                        {
+                                        return false;
+                                        }
+                                    </code>
+                                    <code style="block" product="ac,cl" lang="C++">
+                                        int foo (int Days) {
+                                        if ((Days % 10) == 3) {
+                                        return 1;
+                                        } else {
+                                        return 0;
+                                        }
+                                        }
+                                    </code>
+                                </p>
+                            </li>
+                            <li>
+                                <control>Always</control> - select this checkbox to have braces always introduced automatically.</li>
+                        </list>
+                    </td>
+                </tr>
+            </table>
+        </p>
+    </for>
+</for>
+
+
+
+    <seealso>
+        <category ref="procedures">
+            <a href="Installing_and_Removing_External_Software_using_Bower_Package_Manager.xml" product="!ac,cl"/>
+            <a href="Previewing_Compiled_CoffeeScript_Files.xml"/>
+            <a href="Using_File_Watchers.xml" product="!ac"/>
+        </category>
+        <category ref="reference">
+            <a href="Node_js.xml"/>
+        </category>
+    </seealso>
